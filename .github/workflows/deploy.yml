@@ -1,0 +1,25 @@
+name: Simple HTML Deploy
+
+on:
+  push:
+    branches:
+      - main  # Jab bhi main branch me tabdeeli ho
+
+jobs:
+  deploy-job:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: GitHub se file uthana
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Sirf check karna ke file exist karti hai (CI)
+      - name: Check HTML File
+        run: ls index.html
+
+      # Step 3: Website ko live karna (CD)
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: . # Puri directory ko live kar do
